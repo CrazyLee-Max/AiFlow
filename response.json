@@ -1,0 +1,538 @@
+{
+    "nodes": [
+        {
+            "id": "start",
+            "name": "开始",
+            "kind": "start",
+            "inputPorts": [],
+            "outputPorts": [
+                "output"
+            ],
+            "inputParams": [
+                {
+                    "code": "age",
+                    "id": "start_age",
+                    "type": {
+                        "source": "default",
+                        "typeId": "number",
+                        "typeName": "Number"
+                    }
+                },
+                {
+                    "code": "height",
+                    "id": "start_height",
+                    "type": {
+                        "source": "default",
+                        "typeId": "number",
+                        "typeName": "Number"
+                    }
+                },
+                {
+                    "code": "weight",
+                    "id": "start_weight",
+                    "type": {
+                        "source": "default",
+                        "typeId": "number",
+                        "typeName": "Number"
+                    }
+                }
+            ],
+            "outputParams": []
+        },
+        {
+            "id": "variableDef_1",
+            "name": "接收用户数据",
+            "kind": "variableDef",
+            "inputPorts": [
+                "input"
+            ],
+            "outputPorts": [
+                "output"
+            ],
+            "inputParams": [],
+            "outputParams": [
+                {
+                    "code": "age",
+                    "id": "variableDef_1_age",
+                    "type": {
+                        "source": "default",
+                        "typeId": "number",
+                        "typeName": "Number"
+                    },
+                    "valueExpr": {
+                        "kind": "nodeVariable",
+                        "nodeCode": "start_start",
+                        "variable": "age",
+                        "variableId": "start_age"
+                    }
+                },
+                {
+                    "code": "height",
+                    "id": "variableDef_1_height",
+                    "type": {
+                        "source": "default",
+                        "typeId": "number",
+                        "typeName": "Number"
+                    },
+                    "valueExpr": {
+                        "kind": "nodeVariable",
+                        "nodeCode": "start_start",
+                        "variable": "height",
+                        "variableId": "start_height"
+                    }
+                },
+                {
+                    "code": "weight",
+                    "id": "variableDef_1_weight",
+                    "type": {
+                        "source": "default",
+                        "typeId": "number",
+                        "typeName": "Number"
+                    },
+                    "valueExpr": {
+                        "kind": "nodeVariable",
+                        "nodeCode": "start_start",
+                        "variable": "weight",
+                        "variableId": "start_weight"
+                    }
+                },
+                {
+                    "code": "result",
+                    "id": "variableDef_1_result",
+                    "type": {
+                        "source": "default",
+                        "typeId": "string",
+                        "typeName": "String"
+                    },
+                    "valueExpr": {
+                        "kind": "stringConst",
+                        "value": ""
+                    }
+                }
+            ]
+        },
+        {
+            "id": "selector_1",
+            "name": "判断年龄是否小于20岁",
+            "kind": "selector",
+            "inputPorts": [
+                "input"
+            ],
+            "outputPorts": [
+                "young",
+                "adult"
+            ],
+            "inputParams": [],
+            "outputParams": [],
+            "branches": [
+                {
+                    "port": "young",
+                    "conditionExpr": {
+                        "kind": "logic",
+                        "operator": "AND",
+                        "expresses": [
+                            {
+                                "kind": "compare",
+                                "operator": "lessThan",
+                                "leftExpress": {
+                                    "kind": "nodeVariable",
+                                    "nodeCode": "variableDef_variableDef_1",
+                                    "variable": "age",
+                                    "variableId": "variableDef_1_age"
+                                },
+                                "rightExpress": {
+                                    "kind": "numberConst",
+                                    "value": 20
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "port": "adult",
+                    "conditionExpr": null
+                }
+            ]
+        },
+        {
+            "id": "batchAssignValue_1",
+            "name": "输出年轻结果",
+            "kind": "batchAssignValue",
+            "inputPorts": [
+                "input"
+            ],
+            "outputPorts": [
+                "output"
+            ],
+            "inputParams": [],
+            "outputParams": [],
+            "expresses": [
+                {
+                    "kind": "assignValue",
+                    "leftExpress": {
+                        "kind": "nodeVariable",
+                        "nodeCode": "variableDef_variableDef_1",
+                        "variable": "result",
+                        "variableId": "variableDef_1_result"
+                    },
+                    "rightExpress": {
+                        "kind": "stringConst",
+                        "value": "年轻"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "end_1",
+            "name": "流程结束",
+            "kind": "end",
+            "inputPorts": [
+                "input"
+            ],
+            "outputPorts": [],
+            "inputParams": [],
+            "outputParams": [
+                {
+                    "code": "result",
+                    "id": "end_1_result",
+                    "type": {
+                        "source": "default",
+                        "typeId": "string",
+                        "typeName": "String"
+                    },
+                    "valueExpr": {
+                        "kind": "nodeVariable",
+                        "nodeCode": "variableDef_variableDef_1",
+                        "variable": "result",
+                        "variableId": "variableDef_1_result"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "selector_2",
+            "name": "判断体重是否超过300kg",
+            "kind": "selector",
+            "inputPorts": [
+                "input"
+            ],
+            "outputPorts": [
+                "overweight",
+                "normal"
+            ],
+            "inputParams": [],
+            "outputParams": [],
+            "branches": [
+                {
+                    "port": "overweight",
+                    "conditionExpr": {
+                        "kind": "logic",
+                        "operator": "AND",
+                        "expresses": [
+                            {
+                                "kind": "compare",
+                                "operator": "greaterThan",
+                                "leftExpress": {
+                                    "kind": "nodeVariable",
+                                    "nodeCode": "variableDef_variableDef_1",
+                                    "variable": "weight",
+                                    "variableId": "variableDef_1_weight"
+                                },
+                                "rightExpress": {
+                                    "kind": "numberConst",
+                                    "value": 300
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "port": "normal",
+                    "conditionExpr": null
+                }
+            ]
+        },
+        {
+            "id": "batchAssignValue_2",
+            "name": "输出超重结果",
+            "kind": "batchAssignValue",
+            "inputPorts": [
+                "input"
+            ],
+            "outputPorts": [
+                "output"
+            ],
+            "inputParams": [],
+            "outputParams": [],
+            "expresses": [
+                {
+                    "kind": "assignValue",
+                    "leftExpress": {
+                        "kind": "nodeVariable",
+                        "nodeCode": "variableDef_variableDef_1",
+                        "variable": "result",
+                        "variableId": "variableDef_1_result"
+                    },
+                    "rightExpress": {
+                        "kind": "stringConst",
+                        "value": "超重"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "end_2",
+            "name": "流程结束",
+            "kind": "end",
+            "inputPorts": [
+                "input"
+            ],
+            "outputPorts": [],
+            "inputParams": [],
+            "outputParams": [
+                {
+                    "code": "result",
+                    "id": "end_2_result",
+                    "type": {
+                        "source": "default",
+                        "typeId": "string",
+                        "typeName": "String"
+                    },
+                    "valueExpr": {
+                        "kind": "nodeVariable",
+                        "nodeCode": "variableDef_variableDef_1",
+                        "variable": "result",
+                        "variableId": "variableDef_1_result"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "selector_3",
+            "name": "判断身高是否超过2米",
+            "kind": "selector",
+            "inputPorts": [
+                "input"
+            ],
+            "outputPorts": [
+                "tall",
+                "short"
+            ],
+            "inputParams": [],
+            "outputParams": [],
+            "branches": [
+                {
+                    "port": "tall",
+                    "conditionExpr": {
+                        "kind": "logic",
+                        "operator": "AND",
+                        "expresses": [
+                            {
+                                "kind": "compare",
+                                "operator": "greaterThan",
+                                "leftExpress": {
+                                    "kind": "nodeVariable",
+                                    "nodeCode": "variableDef_variableDef_1",
+                                    "variable": "height",
+                                    "variableId": "variableDef_1_height"
+                                },
+                                "rightExpress": {
+                                    "kind": "numberConst",
+                                    "value": 2
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "port": "short",
+                    "conditionExpr": null
+                }
+            ]
+        },
+        {
+            "id": "batchAssignValue_3",
+            "name": "输出巨人结果",
+            "kind": "batchAssignValue",
+            "inputPorts": [
+                "input"
+            ],
+            "outputPorts": [
+                "output"
+            ],
+            "inputParams": [],
+            "outputParams": [],
+            "expresses": [
+                {
+                    "kind": "assignValue",
+                    "leftExpress": {
+                        "kind": "nodeVariable",
+                        "nodeCode": "variableDef_variableDef_1",
+                        "variable": "result",
+                        "variableId": "variableDef_1_result"
+                    },
+                    "rightExpress": {
+                        "kind": "stringConst",
+                        "value": "巨人"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "end_3",
+            "name": "流程结束",
+            "kind": "end",
+            "inputPorts": [
+                "input"
+            ],
+            "outputPorts": [],
+            "inputParams": [],
+            "outputParams": [
+                {
+                    "code": "result",
+                    "id": "end_3_result",
+                    "type": {
+                        "source": "default",
+                        "typeId": "string",
+                        "typeName": "String"
+                    },
+                    "valueExpr": {
+                        "kind": "nodeVariable",
+                        "nodeCode": "variableDef_variableDef_1",
+                        "variable": "result",
+                        "variableId": "variableDef_1_result"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "batchAssignValue_4",
+            "name": "输出小巨人结果",
+            "kind": "batchAssignValue",
+            "inputPorts": [
+                "input"
+            ],
+            "outputPorts": [
+                "output"
+            ],
+            "inputParams": [],
+            "outputParams": [],
+            "expresses": [
+                {
+                    "kind": "assignValue",
+                    "leftExpress": {
+                        "kind": "nodeVariable",
+                        "nodeCode": "variableDef_variableDef_1",
+                        "variable": "result",
+                        "variableId": "variableDef_1_result"
+                    },
+                    "rightExpress": {
+                        "kind": "stringConst",
+                        "value": "小巨人"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "end_4",
+            "name": "流程结束",
+            "kind": "end",
+            "inputPorts": [
+                "input"
+            ],
+            "outputPorts": [],
+            "inputParams": [],
+            "outputParams": [
+                {
+                    "code": "result",
+                    "id": "end_4_result",
+                    "type": {
+                        "source": "default",
+                        "typeId": "string",
+                        "typeName": "String"
+                    },
+                    "valueExpr": {
+                        "kind": "nodeVariable",
+                        "nodeCode": "variableDef_variableDef_1",
+                        "variable": "result",
+                        "variableId": "variableDef_1_result"
+                    }
+                }
+            ]
+        }
+    ],
+    "edges": [
+        {
+            "sourceNodeId": "start",
+            "targetNodeId": "variableDef_1",
+            "sourcePort": "output",
+            "targetPort": "input"
+        },
+        {
+            "sourceNodeId": "variableDef_1",
+            "targetNodeId": "selector_1",
+            "sourcePort": "output",
+            "targetPort": "input"
+        },
+        {
+            "sourceNodeId": "selector_1",
+            "targetNodeId": "batchAssignValue_1",
+            "sourcePort": "young",
+            "targetPort": "input"
+        },
+        {
+            "sourceNodeId": "batchAssignValue_1",
+            "targetNodeId": "end_1",
+            "sourcePort": "output",
+            "targetPort": "input"
+        },
+        {
+            "sourceNodeId": "selector_1",
+            "targetNodeId": "selector_2",
+            "sourcePort": "adult",
+            "targetPort": "input"
+        },
+        {
+            "sourceNodeId": "selector_2",
+            "targetNodeId": "batchAssignValue_2",
+            "sourcePort": "overweight",
+            "targetPort": "input"
+        },
+        {
+            "sourceNodeId": "batchAssignValue_2",
+            "targetNodeId": "end_2",
+            "sourcePort": "output",
+            "targetPort": "input"
+        },
+        {
+            "sourceNodeId": "selector_2",
+            "targetNodeId": "selector_3",
+            "sourcePort": "normal",
+            "targetPort": "input"
+        },
+        {
+            "sourceNodeId": "selector_3",
+            "targetNodeId": "batchAssignValue_3",
+            "sourcePort": "tall",
+            "targetPort": "input"
+        },
+        {
+            "sourceNodeId": "batchAssignValue_3",
+            "targetNodeId": "end_3",
+            "sourcePort": "output",
+            "targetPort": "input"
+        },
+        {
+            "sourceNodeId": "selector_3",
+            "targetNodeId": "batchAssignValue_4",
+            "sourcePort": "short",
+            "targetPort": "input"
+        },
+        {
+            "sourceNodeId": "batchAssignValue_4",
+            "targetNodeId": "end_4",
+            "sourcePort": "output",
+            "targetPort": "input"
+        }
+    ]
+}

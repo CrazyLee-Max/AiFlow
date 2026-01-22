@@ -1,0 +1,358 @@
+{
+    "success": true,
+    "nodes": [
+        {
+            "id": "start",
+            "name": "开始",
+            "kind": "start",
+            "inputPorts": [],
+            "outputPorts": [
+                "output"
+            ],
+            "inputParams": [
+                {
+                    "code": "photo",
+                    "id": "start_photo",
+                    "type": {
+                        "source": "default",
+                        "typeId": "fileID",
+                        "typeName": "File"
+                    }
+                }
+            ],
+            "outputParams": []
+        },
+        {
+            "id": "variableDef_1",
+            "name": "初始化数据",
+            "kind": "variableDef",
+            "inputPorts": [
+                "input"
+            ],
+            "outputPorts": [
+                "output"
+            ],
+            "inputParams": [],
+            "outputParams": [
+                {
+                    "code": "userInfo",
+                    "id": "variableDef_1_userInfo",
+                    "type": {
+                        "source": "default",
+                        "typeId": "string",
+                        "typeName": "String"
+                    },
+                    "valueExpr": {
+                        "kind": "stringConst",
+                        "value": ""
+                    }
+                },
+                {
+                    "code": "isVIP",
+                    "id": "variableDef_1_isVIP",
+                    "type": {
+                        "source": "default",
+                        "typeId": "boolean",
+                        "typeName": "Boolean"
+                    },
+                    "valueExpr": {
+                        "kind": "boolConst",
+                        "value": false
+                    }
+                },
+                {
+                    "code": "meetingRoom",
+                    "id": "variableDef_1_meetingRoom",
+                    "type": {
+                        "source": "default",
+                        "typeId": "string",
+                        "typeName": "String"
+                    },
+                    "valueExpr": {
+                        "kind": "stringConst",
+                        "value": ""
+                    }
+                },
+                {
+                    "code": "coffeeOrderResult",
+                    "id": "variableDef_1_coffeeOrderResult",
+                    "type": {
+                        "source": "default",
+                        "typeId": "string",
+                        "typeName": "String"
+                    },
+                    "valueExpr": {
+                        "kind": "stringConst",
+                        "value": ""
+                    }
+                },
+                {
+                    "code": "nonVIPResult",
+                    "id": "variableDef_1_nonVIPResult",
+                    "type": {
+                        "source": "default",
+                        "typeId": "string",
+                        "typeName": "String"
+                    },
+                    "valueExpr": {
+                        "kind": "stringConst",
+                        "value": ""
+                    }
+                }
+            ]
+        },
+        {
+            "id": "batchAssignValue_1",
+            "name": "识别用户身份",
+            "kind": "batchAssignValue",
+            "inputPorts": [
+                "input"
+            ],
+            "outputPorts": [
+                "output"
+            ],
+            "inputParams": [],
+            "outputParams": [],
+            "expresses": [
+                {
+                    "kind": "assignValue",
+                    "leftExpress": {
+                        "kind": "nodeVariable",
+                        "nodeCode": "variableDef_variableDef_1",
+                        "variable": "userInfo",
+                        "variableId": "variableDef_1_userInfo"
+                    },
+                    "rightExpress": {
+                        "kind": "stringConst",
+                        "value": "基于相片识别的用户身份信息"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "selector_1",
+            "name": "判断贵宾资格",
+            "kind": "selector",
+            "inputPorts": [
+                "input"
+            ],
+            "outputPorts": [
+                "vip",
+                "nonVip"
+            ],
+            "inputParams": [],
+            "outputParams": [],
+            "branches": [
+                {
+                    "port": "vip",
+                    "conditionExpr": {
+                        "kind": "compare",
+                        "operator": "equal",
+                        "leftExpress": {
+                            "kind": "nodeVariable",
+                            "nodeCode": "batchAssignValue_batchAssignValue_1",
+                            "variable": "userInfo",
+                            "variableId": "variableDef_1_userInfo"
+                        },
+                        "rightExpress": {
+                            "kind": "stringConst",
+                            "value": "贵宾用户"
+                        }
+                    }
+                },
+                {
+                    "port": "nonVip",
+                    "conditionExpr": null
+                }
+            ]
+        },
+        {
+            "id": "batchAssignValue_2",
+            "name": "获取会议室信息",
+            "kind": "batchAssignValue",
+            "inputPorts": [
+                "input"
+            ],
+            "outputPorts": [
+                "output"
+            ],
+            "inputParams": [],
+            "outputParams": [],
+            "expresses": [
+                {
+                    "kind": "assignValue",
+                    "leftExpress": {
+                        "kind": "nodeVariable",
+                        "nodeCode": "variableDef_variableDef_1",
+                        "variable": "meetingRoom",
+                        "variableId": "variableDef_1_meetingRoom"
+                    },
+                    "rightExpress": {
+                        "kind": "stringConst",
+                        "value": "指定会议室A"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "batchAssignValue_3",
+            "name": "执行咖啡预订",
+            "kind": "batchAssignValue",
+            "inputPorts": [
+                "input"
+            ],
+            "outputPorts": [
+                "output"
+            ],
+            "inputParams": [],
+            "outputParams": [],
+            "expresses": [
+                {
+                    "kind": "assignValue",
+                    "leftExpress": {
+                        "kind": "nodeVariable",
+                        "nodeCode": "variableDef_variableDef_1",
+                        "variable": "coffeeOrderResult",
+                        "variableId": "variableDef_1_coffeeOrderResult"
+                    },
+                    "rightExpress": {
+                        "kind": "stringConst",
+                        "value": "咖啡预订成功"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "batchAssignValue_4",
+            "name": "非贵宾处理",
+            "kind": "batchAssignValue",
+            "inputPorts": [
+                "input"
+            ],
+            "outputPorts": [
+                "output"
+            ],
+            "inputParams": [],
+            "outputParams": [],
+            "expresses": [
+                {
+                    "kind": "assignValue",
+                    "leftExpress": {
+                        "kind": "nodeVariable",
+                        "nodeCode": "variableDef_variableDef_1",
+                        "variable": "nonVIPResult",
+                        "variableId": "variableDef_1_nonVIPResult"
+                    },
+                    "rightExpress": {
+                        "kind": "stringConst",
+                        "value": "非贵宾，流程结束"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "end_1",
+            "name": "流程结束（贵宾）",
+            "kind": "end",
+            "inputPorts": [
+                "input"
+            ],
+            "outputPorts": [],
+            "inputParams": [],
+            "outputParams": [
+                {
+                    "code": "result",
+                    "id": "end_1_result",
+                    "type": {
+                        "source": "default",
+                        "typeId": "string",
+                        "typeName": "String"
+                    },
+                    "valueExpr": {
+                        "kind": "nodeVariable",
+                        "nodeCode": "batchAssignValue_batchAssignValue_3",
+                        "variable": "coffeeOrderResult",
+                        "variableId": "variableDef_1_coffeeOrderResult"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "end_2",
+            "name": "流程结束（非贵宾）",
+            "kind": "end",
+            "inputPorts": [
+                "input"
+            ],
+            "outputPorts": [],
+            "inputParams": [],
+            "outputParams": [
+                {
+                    "code": "result",
+                    "id": "end_2_result",
+                    "type": {
+                        "source": "default",
+                        "typeId": "string",
+                        "typeName": "String"
+                    },
+                    "valueExpr": {
+                        "kind": "nodeVariable",
+                        "nodeCode": "batchAssignValue_batchAssignValue_4",
+                        "variable": "nonVIPResult",
+                        "variableId": "variableDef_1_nonVIPResult"
+                    }
+                }
+            ]
+        }
+    ],
+    "edges": [
+        {
+            "sourceNodeId": "start",
+            "targetNodeId": "variableDef_1",
+            "sourcePort": "output",
+            "targetPort": "input"
+        },
+        {
+            "sourceNodeId": "variableDef_1",
+            "targetNodeId": "batchAssignValue_1",
+            "sourcePort": "output",
+            "targetPort": "input"
+        },
+        {
+            "sourceNodeId": "batchAssignValue_1",
+            "targetNodeId": "selector_1",
+            "sourcePort": "output",
+            "targetPort": "input"
+        },
+        {
+            "sourceNodeId": "selector_1",
+            "targetNodeId": "batchAssignValue_2",
+            "sourcePort": "vip",
+            "targetPort": "input"
+        },
+        {
+            "sourceNodeId": "batchAssignValue_2",
+            "targetNodeId": "batchAssignValue_3",
+            "sourcePort": "output",
+            "targetPort": "input"
+        },
+        {
+            "sourceNodeId": "batchAssignValue_3",
+            "targetNodeId": "end_1",
+            "sourcePort": "output",
+            "targetPort": "input"
+        },
+        {
+            "sourceNodeId": "selector_1",
+            "targetNodeId": "batchAssignValue_4",
+            "sourcePort": "nonVip",
+            "targetPort": "input"
+        },
+        {
+            "sourceNodeId": "batchAssignValue_4",
+            "targetNodeId": "end_2",
+            "sourcePort": "output",
+            "targetPort": "input"
+        }
+    ]
+}

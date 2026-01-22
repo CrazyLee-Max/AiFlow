@@ -1,6 +1,9 @@
 package com.dslg.platform;
 
-import com.dslg.platform.impl.*;
+import com.dslg.platform.impl.InBuilderPlatformStrategy;
+import com.dslg.platform.impl.inbuilder.InBuilderPromptBuilder;
+import com.dslg.platform.impl.inbuilder.InBuilderResponseParser;
+import com.dslg.platform.impl.inbuilder.InBuilderVariableReferenceFixer;
 import com.dslg.service.NodeDefinitionService;
 import com.dslg.validator.VariableIdValidator;
 import lombok.extern.slf4j.Slf4j;
@@ -20,14 +23,27 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PlatformStrategyFactory {
 
     private final Map<PlatformType, PlatformStrategy> strategyCache = new ConcurrentHashMap<>();
+    
+    // 通用服务
     private final NodeDefinitionService nodeDefinitionService;
     private final VariableIdValidator variableIdValidator;
     
+    // InBuilder 特定服务
+    private final InBuilderPromptBuilder inBuilderPromptBuilder;
+    private final InBuilderResponseParser inBuilderResponseParser;
+    private final InBuilderVariableReferenceFixer inBuilderVariableFixer;
+    
     public PlatformStrategyFactory(
             NodeDefinitionService nodeDefinitionService,
-            VariableIdValidator variableIdValidator) {
+            VariableIdValidator variableIdValidator,
+            InBuilderPromptBuilder inBuilderPromptBuilder,
+            InBuilderResponseParser inBuilderResponseParser,
+            InBuilderVariableReferenceFixer inBuilderVariableFixer) {
         this.nodeDefinitionService = nodeDefinitionService;
         this.variableIdValidator = variableIdValidator;
+        this.inBuilderPromptBuilder = inBuilderPromptBuilder;
+        this.inBuilderResponseParser = inBuilderResponseParser;
+        this.inBuilderVariableFixer = inBuilderVariableFixer;
     }
 
     /**
@@ -107,10 +123,22 @@ public class PlatformStrategyFactory {
         
         switch (platformType) {
             case IN_BUILDER:
-                return new InBuilderPlatformStrategy(nodeDefinitionService, variableIdValidator);
+                return new InBuilderPlatformStrategy(
+                    nodeDefinitionService, 
+                    variableIdValidator,
+                    inBuilderPromptBuilder,
+                    inBuilderResponseParser,
+                    inBuilderVariableFixer
+                );
             default:
                 log.warn("未知的平台类型: {}，使用InBuilder策略", platformType);
-                return new InBuilderPlatformStrategy(nodeDefinitionService, variableIdValidator);
+                return new InBuilderPlatformStrategy(
+                    nodeDefinitionService, 
+                    variableIdValidator,
+                    inBuilderPromptBuilder,
+                    inBuilderResponseParser,
+                    inBuilderVariableFixer
+                );
         }
     }
 
