@@ -18,7 +18,7 @@ ai:
   models:
     # DeepSeek配置
     deepseek:
-      api-key: ${DEEPSEEK_API_KEY:sk-006f2b782e57416ca07ade1a9b452160}
+      api-key: ${DEEPSEEK_API_KEY:sk-xxxxxxxxxx}
       base-url: ${DEEPSEEK_BASE_URL:https://api.deepseek.com}
       model-name: ${DEEPSEEK_MODEL:deepseek-chat}
       timeout: ${DEEPSEEK_TIMEOUT:240000}
