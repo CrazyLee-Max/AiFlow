@@ -1,0 +1,25 @@
+{
+    "kind": "start",
+    "name": "开始节点",
+    "description": "流程的开始节点，定义流程的输入参数",
+    "template": {
+        "id": "start",
+        "name": "开始",
+        "kind": "start",
+        "inputPorts": [],
+        "outputPorts": ["output"],
+        "inputParams": [
+            {
+                "code": "变量名",
+                "id": "变量唯一标识(建议格式: 节点ID_变量名, 例如: start_age)",
+                "type": {
+                    "source": "default",
+                    "typeId": "string|number|boolean|list|fileID",
+                    "typeName": "String|Number|Boolean|List|File"
+                }
+            }
+        ],
+        "outputParams": [
+        ]
+    }
+}

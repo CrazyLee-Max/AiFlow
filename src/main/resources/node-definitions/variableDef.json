@@ -1,0 +1,34 @@
+{
+    "kind": "variableDef",
+    "name": "变量定义节点",
+    "description": "定义流程中使用的变量及其初始值。这是唯一可以创建新变量的节点类型。所有在 outputParams 中定义的变量都可以被其子孙节点引用和修改（通过 batchAssignValue）。",
+    "template": {
+        "id": "变量定义节点ID",
+        "name": "变量定义",
+        "kind": "variableDef",
+        "inputPorts": ["input"],
+        "outputPorts": ["output"],
+        "inputParams": [],
+        "outputParams": [
+            {
+                "code": "变量名",
+                "id": "变量唯一标识(建议格式: 节点ID_变量名, 例如: variableDef_1_age)",
+                "type": {
+                    "source": "default",
+                    "typeId": "string|number|boolean|list",
+                    "typeName": "String|Number|Boolean|List"
+                },
+                "valueExpr": {
+                    "kind": "nodeVariable|stringConst|numberConst|boolConst",
+                    "nodeCode": "如果引用变量，填写节点code",
+                    "variable": "如果引用变量，填写变量名",
+                    "variableId": "如果引用变量，填写变量ID",
+                    "value": "如果是常量，填写初始值"
+                }
+            }
+        ]
+    },
+    "notes": {
+        "important": "如果流程中需要使用某个变量（如 result），必须在此节点的 outputParams 中先定义它，后续的 batchAssignValue 或 end 节点才能使用该变量。"
+    }
+}

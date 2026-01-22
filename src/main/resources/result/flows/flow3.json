@@ -1,0 +1,221 @@
+{
+	"id": "eea96709-ecb9-4cfb-817b-57b152cd6033",
+	"kind": "workflow",
+	"code": "testMultiEnd",
+	"name": "testMultiEnd",
+	"version": "v1",
+	"description": "testMultiEnd",
+	"parentId": null,
+	"bizTypeId": "BPMS",
+	"nodes": [
+		{
+			"id": "start",
+			"kind": "start",
+			"code": "start",
+			"name": "开始",
+			"description": "",
+			"stateful": false,
+			"inputSelf": false,
+			"inputParams": [
+				{
+					"code": "p1",
+					"name": null,
+					"description": "",
+					"type": {
+						"source": "default",
+						"typeId": "string",
+						"typeCode": "String",
+						"typeName": "String",
+						"genericTypes": null
+					},
+					"schema": null,
+					"valueExpr": null,
+					"value": null,
+					"required": false
+				}
+			],
+			"outputParams": [],
+			"inputPorts": [],
+			"outputPorts": [
+				"output"
+			],
+			"graphMeta": {
+				"position": {
+					"x": -15.915789473684171,
+					"y": -117.37894736842105
+				}
+			},
+			"returnNode": false
+		},
+		{
+			"id": "end",
+			"kind": "end",
+			"code": "end",
+			"name": "结束",
+			"description": "",
+			"stateful": false,
+			"inputSelf": false,
+			"inputParams": [],
+			"outputParams": [
+				{
+					"code": "out1",
+					"name": null,
+					"description": "",
+					"type": {
+						"source": "default",
+						"typeId": "string",
+						"typeCode": "String",
+						"typeName": "String",
+						"genericTypes": null
+					},
+					"schema": null,
+					"valueExpr": {
+						"value": "is AAA",
+						"kind": "stringConst"
+					},
+					"value": null,
+					"required": false
+				}
+			],
+			"inputPorts": [
+				"input"
+			],
+			"outputPorts": [],
+			"graphMeta": {
+				"position": {
+					"x": 799.0631578947367,
+					"y": -221.82631578947365
+				}
+			},
+			"returnNode": false
+		},
+		{
+			"id": "msiCNb_1wixrw2tyjtFjw",
+			"kind": "selector",
+			"code": "selector_msiCNb_1wixrw2tyjtFjw",
+			"name": "选择器",
+			"description": "",
+			"stateful": false,
+			"inputSelf": false,
+			"inputParams": [],
+			"outputParams": [],
+			"inputPorts": [
+				"input"
+			],
+			"outputPorts": [
+				"OR5Li31XWV_B13RKnJwlt",
+				"xh_sQQnTkwwidcUebd3jR"
+			],
+			"graphMeta": {
+				"position": {
+					"x": 321.83053845857324,
+					"y": -157.17691624290066
+				}
+			},
+			"branches": [
+				{
+					"condition": null,
+					"conditionExpr": {
+						"operator": "AND",
+						"expresses": [
+							{
+								"leftExpress": {
+									"nodeCode": "start",
+									"variable": "p1",
+									"fields": [],
+									"kind": "nodeVariable"
+								},
+								"operator": "equal",
+								"rightExpress": {
+									"value": "AAA",
+									"kind": "stringConst"
+								},
+								"kind": "compare"
+							}
+						],
+						"kind": "logic"
+					},
+					"port": "OR5Li31XWV_B13RKnJwlt"
+				},
+				{
+					"condition": null,
+					"conditionExpr": null,
+					"port": "xh_sQQnTkwwidcUebd3jR"
+				}
+			],
+			"returnNode": false
+		},
+		{
+			"id": "MFNLvbaCc_M9_EIvEkQXe",
+			"kind": "end",
+			"code": "end_MFNLvbaCc_M9_EIvEkQXe",
+			"name": "结束",
+			"description": "",
+			"stateful": false,
+			"inputSelf": false,
+			"inputParams": [],
+			"outputParams": [
+				{
+					"code": "out2",
+					"name": null,
+					"description": "",
+					"type": {
+						"source": "default",
+						"typeId": "string",
+						"typeCode": "String",
+						"typeName": "String",
+						"genericTypes": null
+					},
+					"schema": null,
+					"valueExpr": {
+						"value": "not is AAA",
+						"kind": "stringConst"
+					},
+					"value": null,
+					"required": false
+				}
+			],
+			"inputPorts": [
+				"input"
+			],
+			"outputPorts": [],
+			"graphMeta": {
+				"position": {
+					"x": 799.0631578947367,
+					"y": -32.834810979742755
+				}
+			},
+			"returnNode": false
+		}
+	],
+	"edges": [
+		{
+			"sourceNodeId": "start",
+			"targetNodeId": "msiCNb_1wixrw2tyjtFjw",
+			"sourcePort": "output",
+			"targetPort": "input"
+		},
+		{
+			"sourceNodeId": "msiCNb_1wixrw2tyjtFjw",
+			"targetNodeId": "end",
+			"sourcePort": "OR5Li31XWV_B13RKnJwlt",
+			"targetPort": "input"
+		},
+		{
+			"sourceNodeId": "msiCNb_1wixrw2tyjtFjw",
+			"targetNodeId": "MFNLvbaCc_M9_EIvEkQXe",
+			"sourcePort": "xh_sQQnTkwwidcUebd3jR",
+			"targetPort": "input"
+		}
+	],
+	"extension": {
+		"__initialized__": true
+	},
+	"sysInit": false,
+	"createdBy": "be26dc6b-8f6f-afc6-c217-d9e6010d673e",
+	"createdOn": 1761816279.182,
+	"lastChangedBy": "be26dc6b-8f6f-afc6-c217-d9e6010d673e",
+	"lastChangedOn": 1761816403.935,
+	"cacheVersion": null,
+	"releaseStatus": null
+}
