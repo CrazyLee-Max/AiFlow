@@ -144,6 +144,8 @@ public class InBuilderPromptBuilder {
         Set<String> usedNodeTypes = new LinkedHashSet<>();
         usedNodeTypes.add("start");
         usedNodeTypes.add("end");
+        // 显式添加基础控制节点，确保 Prompt 中包含其详细定义结构
+        usedNodeTypes.add("selector");
         
         if (taskSteps != null) {
             for (TaskStep step : taskSteps) {

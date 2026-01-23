@@ -1,0 +1,68 @@
+{
+  "id": "435c6cbe-7866-4d4b-9b56-f38426be5be5",
+  "kind": "workflow",
+  "code": "device_test",
+  "name": "设备节点测试",
+  "version": "v1",
+  "description": "",
+  "parentId": null,
+  "bizTypeId": "BP",
+  "nodes": [
+    {
+      "id": "start",
+      "kind": "start",
+      "code": "start",
+      "name": "开始",
+      "description": "",
+      "inputParams": [],
+      "outputParams": [],
+      "inputPorts": [],
+      "outputPorts": [
+        "output"
+      ]
+    },
+    {
+      "id": "end",
+      "kind": "end",
+      "code": "end",
+      "name": "结束",
+      "description": "",
+      "inputParams": [],
+      "outputParams": [],
+      "inputPorts": [
+        "input"
+      ]
+    },
+    {
+      "id": "YQw_rZImD4UkY6mtlCrKo",
+      "code": "coffer_YQw_rZImD4UkY6mtlCrKo",
+      "kind": "coffer",
+      "name": "咖啡机",
+      "description": "",
+      "inputParams": [],
+      "outputParams": [],
+      "inputPorts": [
+        "input"
+      ],
+      "outputPorts": [
+        "output"
+      ],
+      "deviceId": "c1",
+      "deviceAction": "wakeUp"
+    }
+  ],
+  "edges": [
+    {
+      "sourceNodeId": "start",
+      "targetNodeId": "YQw_rZImD4UkY6mtlCrKo",
+      "sourcePort": "output",
+      "targetPort": "input"
+    },
+    {
+      "sourceNodeId": "YQw_rZImD4UkY6mtlCrKo",
+      "targetNodeId": "end",
+      "sourcePort": "output",
+      "targetPort": "input"
+    }
+  ]
+}

@@ -22,6 +22,12 @@ public class NodeDefinitionService {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
     
+    private final DeviceModelService deviceModelService;
+    
+    public NodeDefinitionService(DeviceModelService deviceModelService) {
+        this.deviceModelService = deviceModelService;
+    }
+    
     /**
      * 存储所有节点定义，key为节点类型(kind)，value为节点定义JSON
      */
@@ -99,7 +105,7 @@ public class NodeDefinitionService {
      * @return 是否支持
      */
     public boolean isNodeTypeSupported(String nodeType) {
-        return nodeDefinitions.containsKey(nodeType);
+        return nodeDefinitions.containsKey(nodeType) || deviceModelService.isDeviceTypeSupported(nodeType);
     }
 
     /**
@@ -146,6 +152,11 @@ public class NodeDefinitionService {
      * @return 格式化的节点定义字符串
      */
     public String formatNodeDefinitionForPrompt(String nodeType) {
+        // 如果是设备类型，使用 DeviceModelService 生成定义
+        if (deviceModelService.isDeviceTypeSupported(nodeType)) {
+            return deviceModelService.buildDeviceNodeDefinition(nodeType);
+        }
+        
         JsonNode definition = getNodeDefinition(nodeType);
         if (definition == null) {
             return "";

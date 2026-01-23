@@ -5,7 +5,6 @@ import com.dslg.platform.PlatformType;
 import com.dslg.platform.impl.inbuilder.InBuilderPromptBuilder;
 import com.dslg.platform.impl.inbuilder.InBuilderResponseParser;
 import com.dslg.platform.impl.inbuilder.InBuilderVariableReferenceFixer;
-import com.dslg.service.DeviceModelService;
 import com.dslg.service.McpServerService;
 import com.dslg.service.NodeDefinitionService;
 import com.dslg.service.model.Edge;
@@ -37,7 +36,6 @@ public class InBuilderPlatformStrategy extends AbstractPlatformStrategy {
     private String mcpServerUrl;
     
     private final NodeDefinitionService nodeDefinitionService;
-    private final DeviceModelService deviceModelService;
     private final VariableIdValidator variableIdValidator;
     private final InBuilderPromptBuilder promptBuilder;
     private final InBuilderResponseParser responseParser;
@@ -45,13 +43,11 @@ public class InBuilderPlatformStrategy extends AbstractPlatformStrategy {
     
     public InBuilderPlatformStrategy(
             NodeDefinitionService nodeDefinitionService,
-            DeviceModelService deviceModelService,
             VariableIdValidator variableIdValidator,
             InBuilderPromptBuilder promptBuilder,
             InBuilderResponseParser responseParser,
             InBuilderVariableReferenceFixer variableFixer) {
         this.nodeDefinitionService = nodeDefinitionService;
-        this.deviceModelService = deviceModelService;
         this.variableIdValidator = variableIdValidator;
         this.promptBuilder = promptBuilder;
         this.responseParser = responseParser;
@@ -283,10 +279,7 @@ public class InBuilderPlatformStrategy extends AbstractPlatformStrategy {
             if (nodeKind == null || nodeKind.isEmpty()) {
                 errors.add("节点 " + nodeId + " 缺少 kind 字段");
             } else {
-                boolean isSupported = nodeDefinitionService.isNodeTypeSupported(nodeKind) 
-                                   || deviceModelService.isDeviceTypeSupported(nodeKind);
-                
-                if (!isSupported) {
+                if (!nodeDefinitionService.isNodeTypeSupported(nodeKind)) {
                     errors.add("节点 " + nodeId + " 使用了不支持的类型: " + nodeKind);
                 }
                 

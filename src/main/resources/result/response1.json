@@ -1,9 +1,8 @@
 {
-    "success": true,
     "nodes": [
         {
             "id": "start",
-            "name": "开始",
+            "name": "流程开始",
             "kind": "start",
             "inputPorts": [],
             "outputPorts": [
@@ -24,7 +23,7 @@
         },
         {
             "id": "variableDef_1",
-            "name": "接收饮品类型",
+            "name": "接收上传信息",
             "kind": "variableDef",
             "inputPorts": [
                 "input"
@@ -60,7 +59,7 @@
             ],
             "outputPorts": [
                 "americano",
-                "sparklingWater",
+                "bubbleWater",
                 "default"
             ],
             "inputParams": [],
@@ -69,35 +68,47 @@
                 {
                     "port": "americano",
                     "conditionExpr": {
-                        "kind": "compare",
-                        "operator": "equal",
-                        "leftExpress": {
-                            "kind": "nodeVariable",
-                            "nodeCode": "variableDef_variableDef_1",
-                            "variable": "drinkType",
-                            "variableId": "variableDef_1_drinkType"
-                        },
-                        "rightExpress": {
-                            "kind": "stringConst",
-                            "value": "美式咖啡"
-                        }
+                        "kind": "logic",
+                        "operator": "and",
+                        "expresses": [
+                            {
+                                "kind": "compare",
+                                "operator": "equal",
+                                "leftExpress": {
+                                    "kind": "nodeVariable",
+                                    "nodeCode": "variableDef_variableDef_1",
+                                    "variable": "drinkType",
+                                    "variableId": "variableDef_1_drinkType"
+                                },
+                                "rightExpress": {
+                                    "kind": "stringConst",
+                                    "value": "美式咖啡"
+                                }
+                            }
+                        ]
                     }
                 },
                 {
-                    "port": "sparklingWater",
+                    "port": "bubbleWater",
                     "conditionExpr": {
-                        "kind": "compare",
-                        "operator": "equal",
-                        "leftExpress": {
-                            "kind": "nodeVariable",
-                            "nodeCode": "variableDef_variableDef_1",
-                            "variable": "drinkType",
-                            "variableId": "variableDef_1_drinkType"
-                        },
-                        "rightExpress": {
-                            "kind": "stringConst",
-                            "value": "气泡水"
-                        }
+                        "kind": "logic",
+                        "operator": "and",
+                        "expresses": [
+                            {
+                                "kind": "compare",
+                                "operator": "equal",
+                                "leftExpress": {
+                                    "kind": "nodeVariable",
+                                    "nodeCode": "variableDef_variableDef_1",
+                                    "variable": "drinkType",
+                                    "variableId": "variableDef_1_drinkType"
+                                },
+                                "rightExpress": {
+                                    "kind": "stringConst",
+                                    "value": "气泡水"
+                                }
+                            }
+                        ]
                     }
                 },
                 {
@@ -118,8 +129,8 @@
             ],
             "inputParams": [
                 {
-                    "id": "coffeeType",
                     "code": "coffeeType",
+                    "id": "coffer_1_coffeeType",
                     "type": {
                         "source": "default",
                         "typeId": "string",
@@ -133,7 +144,7 @@
             ],
             "outputParams": [],
             "deviceAction": "startBrew",
-            "deviceId": "auto"
+            "deviceId": "咖啡机1"
         },
         {
             "id": "end_1",
@@ -180,7 +191,7 @@
         {
             "sourceNodeId": "selector_1",
             "targetNodeId": "end_1",
-            "sourcePort": "sparklingWater",
+            "sourcePort": "bubbleWater",
             "targetPort": "input"
         },
         {
@@ -189,5 +200,17 @@
             "sourcePort": "output",
             "targetPort": "input"
         }
-    ]
+    ],
+    "taskDecomposition": null,
+    "error": null,
+    "generationTime": null,
+    "processingTimeMs": null,
+    "metadata": {
+        "aiResponseLength": 4456,
+        "edgeCount": 5,
+        "nodeCount": 6,
+        "platformName": "InBuilder",
+        "platform": "inbuilder"
+    },
+    "validation": null
 }

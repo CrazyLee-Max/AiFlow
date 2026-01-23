@@ -257,7 +257,7 @@ public class DeviceModelService {
         sb.append("  \"kind\": \"").append(category).append("\",\n");
         sb.append("  \"inputPorts\": [\"input\"],\n");
         sb.append("  \"outputPorts\": [\"output\"],\n");
-        sb.append("  \"deviceId\": \"设备实例ID（可以是 auto 表示自动分配）\",\n");
+        sb.append("  \"deviceId\": \"设备实例ID（如果是自动分配请填 auto，如果用户指定了设备（如'咖啡机1'），请尝试提取设备标识，如 'c1'）\",\n");
         sb.append("  \"deviceAction\": \"操作名称（从下面列表中选择）\",\n");
         sb.append("  \"inputParams\": [根据选择的操作动态生成，参数具体填写规则填写参照其他操作的参数说明],\n");
         sb.append("  \"outputParams\": []\n");

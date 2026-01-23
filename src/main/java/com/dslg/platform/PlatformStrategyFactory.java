@@ -4,7 +4,6 @@ import com.dslg.platform.impl.InBuilderPlatformStrategy;
 import com.dslg.platform.impl.inbuilder.InBuilderPromptBuilder;
 import com.dslg.platform.impl.inbuilder.InBuilderResponseParser;
 import com.dslg.platform.impl.inbuilder.InBuilderVariableReferenceFixer;
-import com.dslg.service.DeviceModelService;
 import com.dslg.service.NodeDefinitionService;
 import com.dslg.validator.VariableIdValidator;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +26,6 @@ public class PlatformStrategyFactory {
     
     // 通用服务
     private final NodeDefinitionService nodeDefinitionService;
-    private final DeviceModelService deviceModelService;
     private final VariableIdValidator variableIdValidator;
     
     // InBuilder 特定服务
@@ -37,13 +35,11 @@ public class PlatformStrategyFactory {
     
     public PlatformStrategyFactory(
             NodeDefinitionService nodeDefinitionService,
-            DeviceModelService deviceModelService,
             VariableIdValidator variableIdValidator,
             InBuilderPromptBuilder inBuilderPromptBuilder,
             InBuilderResponseParser inBuilderResponseParser,
             InBuilderVariableReferenceFixer inBuilderVariableFixer) {
         this.nodeDefinitionService = nodeDefinitionService;
-        this.deviceModelService = deviceModelService;
         this.variableIdValidator = variableIdValidator;
         this.inBuilderPromptBuilder = inBuilderPromptBuilder;
         this.inBuilderResponseParser = inBuilderResponseParser;
@@ -129,7 +125,6 @@ public class PlatformStrategyFactory {
             case IN_BUILDER:
                 return new InBuilderPlatformStrategy(
                     nodeDefinitionService,
-                    deviceModelService,
                     variableIdValidator,
                     inBuilderPromptBuilder,
                     inBuilderResponseParser,
@@ -139,7 +134,6 @@ public class PlatformStrategyFactory {
                 log.warn("未知的平台类型: {}，使用InBuilder策略", platformType);
                 return new InBuilderPlatformStrategy(
                     nodeDefinitionService,
-                    deviceModelService,
                     variableIdValidator,
                     inBuilderPromptBuilder,
                     inBuilderResponseParser,
