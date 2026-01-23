@@ -1,0 +1,43 @@
+{
+  "id": "PAeLbwDnWJpIWg7H4urwa",
+  "code": "deviceEventListen_PAeLbwDnWJpIWg7H4urwa",
+  "kind": "deviceEventListen",
+  "name": "设备事件",
+  "description": "",
+  "inputParams": [],
+  "outputParams": [
+    {
+      "id": "cupId",
+      "code": "cupId",
+      "type": {
+        "source": "default",
+        "typeId": "string"
+      },
+      "readOnly": true
+    },
+    {
+      "id": "duration",
+      "code": "duration",
+      "type": {
+        "source": "default",
+        "typeId": "string"
+      },
+      "readOnly": true
+    },
+    {
+      "id": "coffeeType",
+      "code": "coffeeType",
+      "type": {
+        "source": "default",
+        "typeId": "string"
+      },
+      "readOnly": true
+    }
+  ],
+  "inputPorts": [],
+  "outputPorts": [
+    "output"
+  ],
+  "deviceCategory": "coffer",
+  "deviceEvent": "onBrewCompleted"
+}

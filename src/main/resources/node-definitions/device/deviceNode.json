@@ -1,0 +1,30 @@
+{
+    "id": "",
+    "kind": "对应的category",
+    "name": "",
+    "inputParams": [
+        {
+        "id": "coffeeType",
+        "code": "coffeeType",
+        "type": {
+          "source": "default",
+          "typeId": "string"
+        },
+        "valueExpr": {
+          "kind": "nodeVariable",
+          "nodeCode": "start",
+          "variable": "keyword",
+          "variableId": "dPgg9WiaQ_6_RizB4M3n_"
+        }
+    }
+    ],
+    "outputParams": [],
+    "inputPorts": [
+      "input"
+    ],
+    "outputPorts": [
+      "output"
+    ],
+    "deviceId": "",
+    "deviceAction": ""
+  }

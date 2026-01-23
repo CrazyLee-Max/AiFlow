@@ -1,0 +1,193 @@
+{
+    "success": true,
+    "nodes": [
+        {
+            "id": "start",
+            "name": "开始",
+            "kind": "start",
+            "inputPorts": [],
+            "outputPorts": [
+                "output"
+            ],
+            "inputParams": [
+                {
+                    "code": "drinkType",
+                    "id": "start_drinkType",
+                    "type": {
+                        "source": "default",
+                        "typeId": "string",
+                        "typeName": "String"
+                    }
+                }
+            ],
+            "outputParams": []
+        },
+        {
+            "id": "variableDef_1",
+            "name": "接收饮品类型",
+            "kind": "variableDef",
+            "inputPorts": [
+                "input"
+            ],
+            "outputPorts": [
+                "output"
+            ],
+            "inputParams": [],
+            "outputParams": [
+                {
+                    "code": "drinkType",
+                    "id": "variableDef_1_drinkType",
+                    "type": {
+                        "source": "default",
+                        "typeId": "string",
+                        "typeName": "String"
+                    },
+                    "valueExpr": {
+                        "kind": "nodeVariable",
+                        "nodeCode": "start_start",
+                        "variable": "drinkType",
+                        "variableId": "start_drinkType"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "selector_1",
+            "name": "判断饮品类型",
+            "kind": "selector",
+            "inputPorts": [
+                "input"
+            ],
+            "outputPorts": [
+                "americano",
+                "sparklingWater",
+                "default"
+            ],
+            "inputParams": [],
+            "outputParams": [],
+            "branches": [
+                {
+                    "port": "americano",
+                    "conditionExpr": {
+                        "kind": "compare",
+                        "operator": "equal",
+                        "leftExpress": {
+                            "kind": "nodeVariable",
+                            "nodeCode": "variableDef_variableDef_1",
+                            "variable": "drinkType",
+                            "variableId": "variableDef_1_drinkType"
+                        },
+                        "rightExpress": {
+                            "kind": "stringConst",
+                            "value": "美式咖啡"
+                        }
+                    }
+                },
+                {
+                    "port": "sparklingWater",
+                    "conditionExpr": {
+                        "kind": "compare",
+                        "operator": "equal",
+                        "leftExpress": {
+                            "kind": "nodeVariable",
+                            "nodeCode": "variableDef_variableDef_1",
+                            "variable": "drinkType",
+                            "variableId": "variableDef_1_drinkType"
+                        },
+                        "rightExpress": {
+                            "kind": "stringConst",
+                            "value": "气泡水"
+                        }
+                    }
+                },
+                {
+                    "port": "default",
+                    "conditionExpr": null
+                }
+            ]
+        },
+        {
+            "id": "coffer_1",
+            "name": "美式咖啡分支",
+            "kind": "coffer",
+            "inputPorts": [
+                "input"
+            ],
+            "outputPorts": [
+                "output"
+            ],
+            "inputParams": [
+                {
+                    "id": "coffeeType",
+                    "code": "coffeeType",
+                    "type": {
+                        "source": "default",
+                        "typeId": "string",
+                        "typeName": "String"
+                    },
+                    "valueExpr": {
+                        "kind": "stringConst",
+                        "value": "美式"
+                    }
+                }
+            ],
+            "outputParams": [],
+            "deviceAction": "startBrew",
+            "deviceId": "auto"
+        },
+        {
+            "id": "end_1",
+            "name": "气泡水分支",
+            "kind": "end",
+            "inputPorts": [
+                "input"
+            ],
+            "outputPorts": [],
+            "inputParams": [],
+            "outputParams": []
+        },
+        {
+            "id": "end_2",
+            "name": "流程结束",
+            "kind": "end",
+            "inputPorts": [
+                "input"
+            ],
+            "outputPorts": [],
+            "inputParams": [],
+            "outputParams": []
+        }
+    ],
+    "edges": [
+        {
+            "sourceNodeId": "start",
+            "targetNodeId": "variableDef_1",
+            "sourcePort": "output",
+            "targetPort": "input"
+        },
+        {
+            "sourceNodeId": "variableDef_1",
+            "targetNodeId": "selector_1",
+            "sourcePort": "output",
+            "targetPort": "input"
+        },
+        {
+            "sourceNodeId": "selector_1",
+            "targetNodeId": "coffer_1",
+            "sourcePort": "americano",
+            "targetPort": "input"
+        },
+        {
+            "sourceNodeId": "selector_1",
+            "targetNodeId": "end_1",
+            "sourcePort": "sparklingWater",
+            "targetPort": "input"
+        },
+        {
+            "sourceNodeId": "coffer_1",
+            "targetNodeId": "end_2",
+            "sourcePort": "output",
+            "targetPort": "input"
+        }
+    ]
+}

@@ -1,5 +1,6 @@
 package com.dslg.platform.impl.inbuilder;
 
+import com.dslg.service.DeviceModelService;
 import com.dslg.service.NodeDefinitionService;
 import com.dslg.service.model.TaskStep;
 import lombok.extern.slf4j.Slf4j;
@@ -17,9 +18,11 @@ import java.util.*;
 public class InBuilderPromptBuilder {
     
     private final NodeDefinitionService nodeDefinitionService;
+    private final DeviceModelService deviceModelService;
     
-    public InBuilderPromptBuilder(NodeDefinitionService nodeDefinitionService) {
+    public InBuilderPromptBuilder(NodeDefinitionService nodeDefinitionService, DeviceModelService deviceModelService) {
         this.nodeDefinitionService = nodeDefinitionService;
+        this.deviceModelService = deviceModelService;
     }
     
     /**
@@ -44,6 +47,14 @@ public class InBuilderPromptBuilder {
         prompt.append("  - 定义变量/初始化数据 -> variableDef\n");
         prompt.append("  - 变量赋值/数据处理 -> batchAssignValue\n");
         prompt.append("  - 条件判断/分支选择 -> selector\n");
+        
+        String deviceTypesDesc = deviceModelService.getDeviceTypesDescription();
+        if (deviceTypesDesc != null && !deviceTypesDesc.isEmpty()) {
+            prompt.append("\n  [设备节点类型]\n");
+            // 去掉开头的"可用的设备节点类型：\n"
+            String cleanDesc = deviceTypesDesc.replace("可用的设备节点类型：\n", "");
+            prompt.append(cleanDesc);
+        }
         
         prompt.append("\n请返回严格的JSON格式，结构如下：\n");
         prompt.append("{\n");
@@ -146,7 +157,13 @@ public class InBuilderPromptBuilder {
         prompt.append("1. 必须包含一个开始节点(start)，结束节点(end)可以有多个\n");
         prompt.append("2. 节点数量限制：生成的流程节点总数不得超过20个\n");
         prompt.append("3. 节点类型(kind)必须严格从以下列表中选择：\n");
-        prompt.append("   [start, end, variableDef, batchAssignValue, selector]\n\n");
+        prompt.append("   基础节点: [start, end, variableDef, batchAssignValue, selector]\n");
+        
+        Set<String> deviceCategories = deviceModelService.getAllDeviceCategories();
+        if (!deviceCategories.isEmpty()) {
+            prompt.append("   设备节点: ").append(deviceCategories).append("\n");
+        }
+        prompt.append("\n");
         
         prompt.append("4. 节点详细参数规范：\n");
         for (String nodeType : usedNodeTypes) {
@@ -155,8 +172,39 @@ public class InBuilderPromptBuilder {
                 if (!nodeDefStr.isEmpty()) {
                     prompt.append(nodeDefStr).append("\n");
                 }
+            } else if (deviceModelService.isDeviceTypeSupported(nodeType)) {
+                String deviceDefStr = deviceModelService.buildDeviceNodeDefinition(nodeType);
+                if (!deviceDefStr.isEmpty()) {
+                    prompt.append(deviceDefStr).append("\n");
+                    // 追加 inputParams 结构说明
+                    appendDeviceInputParamsGuide(prompt);
+                }
             }
         }
+    }
+
+    private void appendDeviceInputParamsGuide(StringBuilder prompt) {
+        prompt.append("    [重要] inputParams 填写规范示例：\n");
+        prompt.append("    \"inputParams\": [\n");
+        prompt.append("      {\n");
+        prompt.append("        \"id\": \"参数名(如 coffeeType)\",\n");
+        prompt.append("        \"code\": \"参数名(同上)\",\n");
+        prompt.append("        \"type\": { \"source\": \"default\", \"typeId\": \"string\" },\n");
+        prompt.append("        \"valueExpr\": {\n");
+        prompt.append("          \"kind\": \"nodeVariable\", // 引用变量\n");
+        prompt.append("          \"nodeCode\": \"来源节点Code(如 start)\",\n");
+        prompt.append("          \"variable\": \"变量名(如 keyword)\",\n");
+        prompt.append("          \"variableId\": \"变量ID\"\n");
+        prompt.append("        }\n");
+        prompt.append("      },\n");
+        prompt.append("      // 或者直接值\n");
+        prompt.append("      {\n");
+        prompt.append("        \"id\": \"count\",\n");
+        prompt.append("        \"code\": \"count\",\n");
+        prompt.append("        \"type\": { \"source\": \"default\", \"typeId\": \"number\" },\n");
+        prompt.append("        \"valueExpr\": { \"kind\": \"literal\", \"value\": 1 }\n");
+        prompt.append("      }\n");
+        prompt.append("    ]\n\n");
     }
     
     private void appendVariableRules(StringBuilder prompt) {

@@ -1,0 +1,181 @@
+{
+  "modelName": "咖啡机",
+  "provider": null,
+  "category": "coffer",
+  "properties": {},
+  "actions": {
+    "wakeUp": {
+      "arguments": {},
+      "description": "从休眠唤醒"
+    },
+    "powerOn": {
+      "arguments": {},
+      "description": "开机（IDLE）状态"
+    },
+    "powerOff": {
+      "arguments": {},
+      "description": "关机 （OFF）状态"
+    },
+    "stopBrew": {
+      "arguments": {},
+      "description": "中断当前制作"
+    },
+    "selfCheck": {
+      "arguments": {},
+      "description": "执行自检"
+    },
+    "startBrew": {
+      "arguments": {
+        "coffeeType": {
+          "type": "enum",
+          "unit": "",
+          "readOnly": false,
+          "min": null,
+          "max": null,
+          "enumValues": [
+            "美式",
+            "拿铁"
+          ],
+          "description": "咖啡类型"
+        }
+      },
+      "description": "开始制作指定咖啡"
+    },
+    "markCoffee": {
+      "arguments": {
+        "cupId": {
+          "type": "string",
+          "unit": "",
+          "readOnly": false,
+          "min": null,
+          "max": null,
+          "enumValues": [],
+          "description": "杯id"
+        }
+      },
+      "description": "标记一杯咖啡完成（用于追踪）"
+    },
+    "refillBeans": {
+      "arguments": {
+        "amount": {
+          "type": "number",
+          "unit": "g",
+          "readOnly": false,
+          "min": 5,
+          "max": 20,
+          "enumValues": [],
+          "description": "加豆(g)"
+        }
+      },
+      "description": "加豆"
+    },
+    "refillWater": {
+      "arguments": {
+        "amount": {
+          "type": "number",
+          "unit": "ml",
+          "readOnly": false,
+          "min": 50,
+          "max": 300,
+          "enumValues": [],
+          "description": "加水（ml）"
+        }
+      },
+      "description": "加水"
+    },
+    "enterSleepMode": {
+      "arguments": {},
+      "description": "进入休眠模式"
+    }
+  },
+  "events": {
+    "onError": {
+      "fields": {
+        "message": {
+          "type": "string",
+          "unit": "",
+          "readOnly": false,
+          "min": null,
+          "max": null,
+          "enumValues": [],
+          "description": "错误消息"
+        },
+        "errorCode": {
+          "type": "string",
+          "unit": "",
+          "readOnly": false,
+          "min": null,
+          "max": null,
+          "enumValues": [],
+          "description": "错误代码"
+        }
+      },
+      "level": "error",
+      "description": "发生故障"
+    },
+    "onLowWater": {
+      "fields": {
+        "level": {
+          "type": "number",
+          "unit": "%",
+          "readOnly": false,
+          "min": 0,
+          "max": 50,
+          "enumValues": [],
+          "description": "等级（0%停机 5%错误 10%警告）"
+        }
+      },
+      "level": "warning",
+      "description": "水位异常"
+    },
+    "refillBeans": {
+      "fields": {
+        "level": {
+          "type": "number",
+          "unit": "",
+          "readOnly": false,
+          "min": 0,
+          "max": 50,
+          "enumValues": [],
+          "description": "等级（0%停机 5%错误 10%警告）"
+        }
+      },
+      "level": "warning",
+      "description": "豆异常"
+    },
+    "onBrewCompleted": {
+      "fields": {
+        "cupId": {
+          "type": "string",
+          "unit": "",
+          "readOnly": false,
+          "min": null,
+          "max": null,
+          "enumValues": [],
+          "description": "杯id"
+        },
+        "duration": {
+          "type": "number",
+          "unit": "秒",
+          "readOnly": false,
+          "min": 1,
+          "max": 300,
+          "enumValues": [],
+          "description": "时间"
+        },
+        "coffeeType": {
+          "type": "string",
+          "unit": "",
+          "readOnly": false,
+          "min": null,
+          "max": null,
+          "enumValues": [],
+          "description": "咖啡类型"
+        }
+      },
+      "level": "info",
+      "description": "咖啡制作成功完成"
+    }
+  },
+  "extensions": null
+}

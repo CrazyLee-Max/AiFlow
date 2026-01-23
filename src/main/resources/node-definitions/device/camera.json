@@ -1,0 +1,306 @@
+{
+  "modelName": "摄像头",
+  "provider": null,
+  "category": "camera",
+  "properties": {},
+  "actions": {
+    "powerOn": {
+      "arguments": {},
+      "description": "开启摄像头"
+    },
+    "powerOff": {
+      "arguments": {},
+      "description": "关闭摄像头"
+    },
+    "takePhoto": {
+      "arguments": {
+        "resolution": {
+          "type": "enum",
+          "unit": "",
+          "readOnly": false,
+          "min": null,
+          "max": null,
+          "enumValues": [
+            "720P",
+            "1080P",
+            "4K"
+          ],
+          "description": "拍照分辨率"
+        }
+      },
+      "description": "拍摄照片"
+    },
+    "startRecording": {
+      "arguments": {
+        "resolution": {
+          "type": "enum",
+          "unit": "",
+          "readOnly": false,
+          "min": null,
+          "max": null,
+          "enumValues": [
+            "720P",
+            "1080P",
+            "4K"
+          ],
+          "description": "录像分辨率"
+        },
+        "duration": {
+          "type": "number",
+          "unit": "秒",
+          "readOnly": false,
+          "min": 1,
+          "max": 3600,
+          "enumValues": [],
+          "description": "录像时长（秒）"
+        }
+      },
+      "description": "开始录像"
+    },
+    "stopRecording": {
+      "arguments": {},
+      "description": "停止录像"
+    },
+    "recognizeFace": {
+      "arguments": {
+        "photoId": {
+          "type": "string",
+          "unit": "",
+          "readOnly": false,
+          "min": null,
+          "max": null,
+          "enumValues": [],
+          "description": "要识别的照片ID"
+        }
+      },
+      "description": "人脸识别"
+    },
+    "detectMotion": {
+      "arguments": {
+        "sensitivity": {
+          "type": "enum",
+          "unit": "",
+          "readOnly": false,
+          "min": null,
+          "max": null,
+          "enumValues": [
+            "低",
+            "中",
+            "高"
+          ],
+          "description": "移动侦测灵敏度"
+        }
+      },
+      "description": "启动移动侦测"
+    },
+    "adjustFocus": {
+      "arguments": {
+        "focusMode": {
+          "type": "enum",
+          "unit": "",
+          "readOnly": false,
+          "min": null,
+          "max": null,
+          "enumValues": [
+            "自动",
+            "手动"
+          ],
+          "description": "对焦模式"
+        }
+      },
+      "description": "调整焦距"
+    },
+    "setNightMode": {
+      "arguments": {
+        "enabled": {
+          "type": "boolean",
+          "unit": "",
+          "readOnly": false,
+          "min": null,
+          "max": null,
+          "enumValues": [],
+          "description": "是否启用夜视模式"
+        }
+      },
+      "description": "设置夜视模式"
+    }
+  },
+  "events": {
+    "onPhotoTaken": {
+      "fields": {
+        "photoId": {
+          "type": "string",
+          "unit": "",
+          "readOnly": false,
+          "min": null,
+          "max": null,
+          "enumValues": [],
+          "description": "照片ID"
+        },
+        "resolution": {
+          "type": "string",
+          "unit": "",
+          "readOnly": false,
+          "min": null,
+          "max": null,
+          "enumValues": [],
+          "description": "照片分辨率"
+        },
+        "timestamp": {
+          "type": "number",
+          "unit": "ms",
+          "readOnly": false,
+          "min": null,
+          "max": null,
+          "enumValues": [],
+          "description": "拍摄时间戳"
+        }
+      },
+      "level": "info",
+      "description": "照片拍摄完成"
+    },
+    "onRecordingCompleted": {
+      "fields": {
+        "videoId": {
+          "type": "string",
+          "unit": "",
+          "readOnly": false,
+          "min": null,
+          "max": null,
+          "enumValues": [],
+          "description": "视频ID"
+        },
+        "duration": {
+          "type": "number",
+          "unit": "秒",
+          "readOnly": false,
+          "min": 1,
+          "max": 3600,
+          "enumValues": [],
+          "description": "录像时长"
+        },
+        "fileSize": {
+          "type": "number",
+          "unit": "MB",
+          "readOnly": false,
+          "min": null,
+          "max": null,
+          "enumValues": [],
+          "description": "文件大小"
+        }
+      },
+      "level": "info",
+      "description": "录像完成"
+    },
+    "onFaceRecognized": {
+      "fields": {
+        "userId": {
+          "type": "string",
+          "unit": "",
+          "readOnly": false,
+          "min": null,
+          "max": null,
+          "enumValues": [],
+          "description": "识别到的用户ID"
+        },
+        "userName": {
+          "type": "string",
+          "unit": "",
+          "readOnly": false,
+          "min": null,
+          "max": null,
+          "enumValues": [],
+          "description": "用户姓名"
+        },
+        "confidence": {
+          "type": "number",
+          "unit": "%",
+          "readOnly": false,
+          "min": 0,
+          "max": 100,
+          "enumValues": [],
+          "description": "识别置信度"
+        },
+        "isVIP": {
+          "type": "boolean",
+          "unit": "",
+          "readOnly": false,
+          "min": null,
+          "max": null,
+          "enumValues": [],
+          "description": "是否为贵宾"
+        }
+      },
+      "level": "info",
+      "description": "人脸识别成功"
+    },
+    "onMotionDetected": {
+      "fields": {
+        "detectionTime": {
+          "type": "number",
+          "unit": "ms",
+          "readOnly": false,
+          "min": null,
+          "max": null,
+          "enumValues": [],
+          "description": "检测时间"
+        },
+        "motionLevel": {
+          "type": "enum",
+          "unit": "",
+          "readOnly": false,
+          "min": null,
+          "max": null,
+          "enumValues": [
+            "轻微",
+            "中等",
+            "剧烈"
+          ],
+          "description": "移动程度"
+        }
+      },
+      "level": "warning",
+      "description": "检测到移动"
+    },
+    "onError": {
+      "fields": {
+        "errorCode": {
+          "type": "string",
+          "unit": "",
+          "readOnly": false,
+          "min": null,
+          "max": null,
+          "enumValues": [],
+          "description": "错误代码"
+        },
+        "message": {
+          "type": "string",
+          "unit": "",
+          "readOnly": false,
+          "min": null,
+          "max": null,
+          "enumValues": [],
+          "description": "错误消息"
+        }
+      },
+      "level": "error",
+      "description": "摄像头发生错误"
+    },
+    "onStorageLow": {
+      "fields": {
+        "remainingSpace": {
+          "type": "number",
+          "unit": "MB",
+          "readOnly": false,
+          "min": 0,
+          "max": 1000,
+          "enumValues": [],
+          "description": "剩余存储空间"
+        }
+      },
+      "level": "warning",
+      "description": "存储空间不足"
+    }
+  },
+  "extensions": null
+}
