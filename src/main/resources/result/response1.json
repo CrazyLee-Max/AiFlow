@@ -200,17 +200,5 @@
             "sourcePort": "output",
             "targetPort": "input"
         }
-    ],
-    "taskDecomposition": null,
-    "error": null,
-    "generationTime": null,
-    "processingTimeMs": null,
-    "metadata": {
-        "aiResponseLength": 4456,
-        "edgeCount": 5,
-        "nodeCount": 6,
-        "platformName": "InBuilder",
-        "platform": "inbuilder"
-    },
-    "validation": null
+    ]
 }

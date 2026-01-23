@@ -1,0 +1,25 @@
+{
+  "kind": "deviceEventListen",
+  "name": "设备事件监听节点",
+  "description": "监听设备特定事件并触发流程，通常作为起始节点",
+  "template": {
+    "id": "deviceEventListen_generated_id",
+    "name": "设备事件",
+    "kind": "deviceEventListen",
+    "deviceCategory": "设备类型标识(如 coffer)",
+    "deviceEvent": "事件标识(如 onBrewCompleted)",
+    "outputParams": [
+      {
+        "id": "参数ID",
+        "code": "参数Code",
+        "type": { "source": "default", "typeId": "string" },
+        "readOnly": true
+      }
+    ],
+    "inputPorts": [],
+    "outputPorts": ["output"]
+  },
+  "notes": {
+    "usage": "用于监听设备上报的事件。需根据 Available Device Events 列表填写 deviceCategory 和 deviceEvent，并根据事件定义自动填充 outputParams。"
+  }
+}

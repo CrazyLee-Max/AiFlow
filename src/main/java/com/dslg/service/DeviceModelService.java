@@ -240,6 +240,48 @@ public class DeviceModelService {
     }
     
     /**
+     * 获取设备事件描述（用于 deviceEventListen 节点 Prompt）
+     */
+    public String getDeviceEventsPromptContext() {
+        if (deviceModels.isEmpty()) {
+            return "";
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append("可用设备事件列表（用于 deviceEventListen 节点配置）：\n");
+        
+        for (Map.Entry<String, DeviceModel> entry : deviceModels.entrySet()) {
+            DeviceModel model = entry.getValue();
+            if (model.getEvents().isEmpty()) {
+                continue;
+            }
+            
+            sb.append(String.format("设备类型: %s (kind: %s)\n", model.getModelName(), model.getCategory()));
+            
+            for (Map.Entry<String, DeviceEvent> eventEntry : model.getEvents().entrySet()) {
+                DeviceEvent event = eventEntry.getValue();
+                sb.append(String.format("  - 事件: %s (%s)\n", event.getName(), event.getDescription()));
+                
+                if (!event.getFields().isEmpty()) {
+                    sb.append("    输出参数 (outputParams):\n");
+                    for (Map.Entry<String, DeviceEventField> fieldEntry : event.getFields().entrySet()) {
+                        DeviceEventField field = fieldEntry.getValue();
+                        sb.append(String.format("      * %s (%s): %s\n", 
+                                              field.getName(), 
+                                              mapTypeToTypeId(field.getType()), 
+                                              field.getDescription()));
+                    }
+                } else {
+                    sb.append("    无输出参数\n");
+                }
+            }
+            sb.append("\n");
+        }
+        
+        return sb.toString();
+    }
+
+    /**
      * 动态构造设备节点定义（用于 Prompt）
      */
     public String buildDeviceNodeDefinition(String category) {

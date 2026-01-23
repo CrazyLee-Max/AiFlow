@@ -283,7 +283,7 @@ public class InBuilderPlatformStrategy extends AbstractPlatformStrategy {
                     errors.add("节点 " + nodeId + " 使用了不支持的类型: " + nodeKind);
                 }
                 
-                if ("start".equals(nodeKind)) {
+                if ("start".equals(nodeKind) || "deviceEventListen".equals(nodeKind)) {
                     hasStart = true;
                 }
                 if ("end".equals(nodeKind)) {
@@ -293,7 +293,7 @@ public class InBuilderPlatformStrategy extends AbstractPlatformStrategy {
         }
         
         if (!hasStart) {
-            errors.add("流程缺少 start 节点");
+            errors.add("流程缺少开始节点 (start 或 deviceEventListen)");
         }
         if (!hasEnd) {
             errors.add("流程至少需要一个 end 节点");
@@ -368,7 +368,7 @@ public class InBuilderPlatformStrategy extends AbstractPlatformStrategy {
         metadata.put("mcpServerPort", 3001);
         
         metadata.put("supportedElements", Arrays.asList(
-            "start", "end", "variableDef", "batchAssignValue", "selector"
+            "start", "end", "variableDef", "batchAssignValue", "selector", "deviceEventListen"
         ));
         
         metadata.put("mcpTools", Arrays.asList(

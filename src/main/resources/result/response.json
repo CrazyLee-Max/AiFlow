@@ -1,30 +1,31 @@
 {
-    "success": true,
     "nodes": [
         {
-            "id": "start",
-            "name": "开始",
-            "kind": "start",
+            "id": "deviceEventListen_1",
+            "name": "咖啡制作完成事件监听",
+            "kind": "deviceEventListen",
             "inputPorts": [],
             "outputPorts": [
                 "output"
             ],
-            "inputParams": [
+            "inputParams": null,
+            "outputParams": [
                 {
-                    "code": "photoId",
-                    "id": "start_photoId",
+                    "id": "deviceEventListen_1_coffeeType",
+                    "code": "coffeeType",
                     "type": {
                         "source": "default",
-                        "typeId": "fileID",
-                        "typeName": "File"
-                    }
+                        "typeId": "string"
+                    },
+                    "readOnly": true
                 }
             ],
-            "outputParams": []
+            "deviceCategory": "coffer",
+            "deviceEvent": "onBrewCompleted"
         },
         {
             "id": "batchAssignValue_1",
-            "name": "获取用户相片",
+            "name": "获取咖啡类型",
             "kind": "batchAssignValue",
             "inputPorts": [
                 "input"
@@ -40,21 +41,21 @@
                     "leftExpress": {
                         "kind": "nodeVariable",
                         "nodeCode": "variableDef_variableDef_1",
-                        "variable": "userPhotoId",
-                        "variableId": "variableDef_1_userPhotoId"
+                        "variable": "coffeeType",
+                        "variableId": "variableDef_1_coffeeType"
                     },
                     "rightExpress": {
                         "kind": "nodeVariable",
-                        "nodeCode": "start_start",
-                        "variable": "photoId",
-                        "variableId": "start_photoId"
+                        "nodeCode": "deviceEventListen_deviceEventListen_1",
+                        "variable": "coffeeType",
+                        "variableId": "deviceEventListen_1_coffeeType"
                     }
                 }
             ]
         },
         {
             "id": "variableDef_1",
-            "name": "定义变量",
+            "name": "定义咖啡类型变量",
             "kind": "variableDef",
             "inputPorts": [
                 "input"
@@ -65,123 +66,73 @@
             "inputParams": [],
             "outputParams": [
                 {
-                    "code": "userPhotoId",
-                    "id": "variableDef_1_userPhotoId",
+                    "id": "variableDef_1_coffeeType",
+                    "code": "coffeeType",
                     "type": {
                         "source": "default",
-                        "typeId": "fileID",
-                        "typeName": "File"
-                    }
-                },
-                {
-                    "code": "isVIP",
-                    "id": "variableDef_1_isVIP",
-                    "type": {
-                        "source": "default",
-                        "typeId": "boolean",
-                        "typeName": "Boolean"
+                        "typeId": "string"
                     }
                 }
             ]
         },
         {
-            "id": "camera_1",
-            "name": "人脸识别",
-            "kind": "camera",
-            "inputPorts": [
-                "input"
-            ],
-            "outputPorts": [
-                "output"
-            ],
-            "inputParams": [
-                {
-                    "id": "photoId",
-                    "code": "photoId",
-                    "type": {
-                        "source": "default",
-                        "typeId": "string"
-                    },
-                    "valueExpr": {
-                        "kind": "nodeVariable",
-                        "nodeCode": "variableDef_variableDef_1",
-                        "variable": "userPhotoId",
-                        "variableId": "variableDef_1_userPhotoId"
-                    }
-                }
-            ],
-            "outputParams": [],
-            "deviceAction": "recognizeFace",
-            "deviceId": "auto"
-        },
-        {
             "id": "selector_1",
-            "name": "贵宾身份判断",
+            "name": "判断咖啡类型",
             "kind": "selector",
             "inputPorts": [
                 "input"
             ],
             "outputPorts": [
-                "true",
-                "false"
+                "americano",
+                "cappuccino",
+                "default"
             ],
             "inputParams": [],
             "outputParams": [],
             "branches": [
                 {
-                    "port": "true",
+                    "port": "americano",
                     "conditionExpr": {
                         "kind": "compare",
                         "operator": "equal",
                         "leftExpress": {
                             "kind": "nodeVariable",
-                            "nodeCode": "variableDef_variableDef_1",
-                            "variable": "isVIP",
-                            "variableId": "variableDef_1_isVIP"
+                            "nodeCode": "batchAssignValue_batchAssignValue_1",
+                            "variable": "coffeeType",
+                            "variableId": "variableDef_1_coffeeType"
                         },
                         "rightExpress": {
-                            "kind": "boolConst",
-                            "value": true
+                            "kind": "stringConst",
+                            "value": "美式"
                         }
                     }
                 },
                 {
-                    "port": "false",
+                    "port": "cappuccino",
+                    "conditionExpr": {
+                        "kind": "compare",
+                        "operator": "equal",
+                        "leftExpress": {
+                            "kind": "nodeVariable",
+                            "nodeCode": "batchAssignValue_batchAssignValue_1",
+                            "variable": "coffeeType",
+                            "variableId": "variableDef_1_coffeeType"
+                        },
+                        "rightExpress": {
+                            "kind": "stringConst",
+                            "value": "卡布奇诺"
+                        }
+                    }
+                },
+                {
+                    "port": "default",
                     "conditionExpr": null
                 }
             ]
         },
         {
-            "id": "coffer_1",
-            "name": "预定美式咖啡",
-            "kind": "coffer",
-            "inputPorts": [
-                "input"
-            ],
-            "outputPorts": [
-                "output"
-            ],
-            "inputParams": [
-                {
-                    "id": "coffeeType",
-                    "code": "coffeeType",
-                    "type": {
-                        "source": "default",
-                        "typeId": "string"
-                    },
-                    "valueExpr": {
-                        "kind": "stringConst",
-                        "value": "美式"
-                    }
-                }
-            ],
-            "outputParams": [],
-            "deviceAction": "startBrew",
-            "deviceId": "auto"
-        },
-        {
             "id": "end_1",
-            "name": "流程结束（贵宾）",
+            "name": "输出美式完成信息",
             "kind": "end",
             "inputPorts": [
                 "input"
@@ -194,19 +145,18 @@
                     "id": "end_1_result",
                     "type": {
                         "source": "default",
-                        "typeId": "string",
-                        "typeName": "String"
+                        "typeId": "string"
                     },
                     "valueExpr": {
                         "kind": "stringConst",
-                        "value": "贵宾识别成功，美式咖啡已预定"
+                        "value": "美式制作完成"
                     }
                 }
             ]
         },
         {
             "id": "end_2",
-            "name": "流程结束（非贵宾）",
+            "name": "输出卡布奇诺完成信息",
             "kind": "end",
             "inputPorts": [
                 "input"
@@ -219,12 +169,11 @@
                     "id": "end_2_result",
                     "type": {
                         "source": "default",
-                        "typeId": "string",
-                        "typeName": "String"
+                        "typeId": "string"
                     },
                     "valueExpr": {
                         "kind": "stringConst",
-                        "value": "非贵宾，流程结束"
+                        "value": "卡布奇诺制作完成"
                     }
                 }
             ]
@@ -232,7 +181,7 @@
     ],
     "edges": [
         {
-            "sourceNodeId": "start",
+            "sourceNodeId": "deviceEventListen_1",
             "targetNodeId": "variableDef_1",
             "sourcePort": "output",
             "targetPort": "input"
@@ -245,32 +194,20 @@
         },
         {
             "sourceNodeId": "batchAssignValue_1",
-            "targetNodeId": "camera_1",
-            "sourcePort": "output",
-            "targetPort": "input"
-        },
-        {
-            "sourceNodeId": "camera_1",
             "targetNodeId": "selector_1",
             "sourcePort": "output",
             "targetPort": "input"
         },
         {
             "sourceNodeId": "selector_1",
-            "targetNodeId": "coffer_1",
-            "sourcePort": "true",
+            "targetNodeId": "end_1",
+            "sourcePort": "americano",
             "targetPort": "input"
         },
         {
             "sourceNodeId": "selector_1",
             "targetNodeId": "end_2",
-            "sourcePort": "false",
-            "targetPort": "input"
-        },
-        {
-            "sourceNodeId": "coffer_1",
-            "targetNodeId": "end_1",
-            "sourcePort": "output",
+            "sourcePort": "cappuccino",
             "targetPort": "input"
         }
     ]

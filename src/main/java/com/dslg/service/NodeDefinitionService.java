@@ -42,7 +42,7 @@ public class NodeDefinitionService {
      * 支持的节点类型列表
      */
     private static final String[] SUPPORTED_NODE_TYPES = {
-        "start", "end", "variableDef", "batchAssignValue", "selector"
+        "start", "end", "variableDef", "batchAssignValue", "selector", "deviceEventListen"
     };
 
     /**

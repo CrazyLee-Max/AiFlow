@@ -42,7 +42,7 @@ public class InBuilderPromptBuilder {
         }
         
         prompt.append("\n节点类型选择建议：\n");
-        prompt.append("  - 流程开始 -> start\n");
+        prompt.append("  - 流程开始 -> start 或 deviceEventListen（事件触发）\n");
         prompt.append("  - 流程结束 -> end\n");
         prompt.append("  - 定义变量/初始化数据 -> variableDef\n");
         prompt.append("  - 变量赋值/数据处理 -> batchAssignValue\n");
@@ -71,7 +71,7 @@ public class InBuilderPromptBuilder {
         prompt.append("}\n");
         
         prompt.append("\n重要提示：\n");
-        prompt.append("1. 必须包含 start 和 end 节点\n");
+        prompt.append("1. 必须包含一个开始节点（start 或 deviceEventListen），以及至少一个 end 节点\n");
         prompt.append("2. type 字段必须使用上述列出的节点类型，不要自创类型\n");
         prompt.append("3. dependencies 数组中填写该步骤依赖的前置步骤的 id\n");
         prompt.append("4. 步骤数量建议控制在8个以内，保持流程简洁\n");
@@ -146,6 +146,8 @@ public class InBuilderPromptBuilder {
         usedNodeTypes.add("end");
         // 显式添加基础控制节点，确保 Prompt 中包含其详细定义结构
         usedNodeTypes.add("selector");
+        // 显式添加事件监听节点
+        usedNodeTypes.add("deviceEventListen");
         
         if (taskSteps != null) {
             for (TaskStep step : taskSteps) {
@@ -156,7 +158,7 @@ public class InBuilderPromptBuilder {
         }
         
         prompt.append("重要规范要求：\n");
-        prompt.append("1. 必须包含一个开始节点(start)，结束节点(end)可以有多个\n");
+        prompt.append("1. 必须包含一个开始节点(start 或 deviceEventListen)，结束节点(end)可以有多个\n");
         prompt.append("2. 节点数量限制：生成的流程节点总数不得超过20个\n");
         prompt.append("3. 节点类型(kind)必须严格从以下列表中选择：\n");
         prompt.append("   基础节点: [start, end, variableDef, batchAssignValue, selector]\n");
@@ -231,9 +233,10 @@ public class InBuilderPromptBuilder {
     private void appendPortAndEdgeRules(StringBuilder prompt) {
         prompt.append("6. 端口配置规则：\n");
         prompt.append("   - start: inputPorts=[], outputPorts=[\"output\"]\n");
+        prompt.append("   - deviceEventListen: inputPorts=[], outputPorts=[\"output\"]\n");
         prompt.append("   - end: inputPorts=[\"input\"], outputPorts=[]\n");
         prompt.append("   - 其他节点: inputPorts=[\"input\"], outputPorts=[\"output\"]\n");
-        prompt.append("   - selector: inputPorts=[\"input\"], outputPorts=[分支端口列表]\n\n");
+        prompt.append("   - selector: inputPorts=[\"input\"], outputPorts=[分支1, 分支2, ..., default]。支持多个条件分支（Switch-Case模式），请尽量合并到一个 selector 节点中，避免级联。\n\n");
         
         prompt.append("7. 连线规范：\n");
         prompt.append("   - sourceNodeId: 源节点ID\n");
@@ -267,8 +270,9 @@ public class InBuilderPromptBuilder {
         prompt.append("1. 所有变量定义必须包含 id 字段\n");
         prompt.append("2. 所有变量引用必须包含 variableId 字段\n");
         prompt.append("3. nodeCode 格式：kind_nodeId\n");
-        prompt.append("4. 流程必须连通，从 start 到 end\n");
+        prompt.append("4. 流程必须连通，从 start/deviceEventListen 到 end\n");
         prompt.append("5. 可以有多个 end 节点\n");
         prompt.append("6. 不要添加 description 字段\n");
+        prompt.append("7. 多分支选择请合并到一个 selector 节点，不要串联多个 selector\n");
     }
 }
